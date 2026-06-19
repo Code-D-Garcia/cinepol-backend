@@ -1,4 +1,6 @@
 package com.codedgarcia.cinepol.dto.ticket;
 
-public record TicketCreateRequest() {
+public record TicketCreateRequest(
+        String seatName
+) {
 }

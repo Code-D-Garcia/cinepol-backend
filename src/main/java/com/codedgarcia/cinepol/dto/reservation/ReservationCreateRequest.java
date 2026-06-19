@@ -1,4 +1,9 @@
 package com.codedgarcia.cinepol.dto.reservation;
 
-public class ReservationCreateRequest {
+import java.util.UUID;
+
+public record ReservationCreateRequest(
+        UUID userId,
+        UUID ticketId
+) {
 }
