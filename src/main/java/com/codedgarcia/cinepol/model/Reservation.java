@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -16,8 +17,8 @@ import java.time.OffsetDateTime;
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @OneToOne
     @JoinColumn(name = "ticket_id", unique = true)
@@ -29,4 +30,7 @@ public class Reservation {
 
 
     private OffsetDateTime reservationDate;
+
+    @Enumerated(EnumType.STRING)
+    private ReservationStatus status;
 }
