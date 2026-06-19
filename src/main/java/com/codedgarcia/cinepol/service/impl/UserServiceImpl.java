@@ -6,6 +6,8 @@ import com.codedgarcia.cinepol.mapper.UserMapper;
 import com.codedgarcia.cinepol.model.User;
 import com.codedgarcia.cinepol.repository.IUserRepository;
 import com.codedgarcia.cinepol.service.IUserService;
+import com.codedgarcia.cinepol.shared.exception.DuplicateResourceException;
+import com.codedgarcia.cinepol.shared.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,7 @@ public class UserServiceImpl implements IUserService {
     public UserResponse getUserById(UUID id) {
         return userRepository.findById(id)
                 .map(userMapper::toResponse)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con id: " + id));
     }
 
     @Override
@@ -46,7 +48,7 @@ public class UserServiceImpl implements IUserService {
     public UserResponse createUser(UserCreateRequest request) {
 
         if(userRepository.existsByUsernameIgnoreCase(request.username())){
-            throw new RuntimeException("Usuario existente");
+            throw new DuplicateResourceException("Usuario existente");
         }
 
         User user = userMapper.toEntity(request);
